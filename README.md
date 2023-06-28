@@ -27,4 +27,4 @@ Im Projekt werden zwei Deep-Learning-Modelle im PyTorch-Framework trainiert, bas
 * Sklearn 1.2.2
 
 # Training Results
-![Alt text](/https://github.com/itsmeeeeeee/Deep-Learning-Project/blob/main/Bilstm_ergebnisse.pngraw=true "BiLSTM Training")
+![Alt text](/Bilstm_ergebnisse.png?raw=true "BiLSTM Training")
