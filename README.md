@@ -1,5 +1,5 @@
 # Deep-Learning-Project
-# BiLSTM und RNN-Architektur mit dem Bahdanau Attention for NER
+# BiLSTM und RNN-Architektur mit dem Bahdanau Attention für NER-Aufgabe
 
 Im Projekt werden zwei Deep-Learning-Modelle im PyTorch-Framework trainiert, basierend auf dem Kaggle NER-Dataset. Es handelt sich um ein BiLSTM-Modell und ein RNN-Modell mit Bahdanau Attention. 
 
