@@ -21,6 +21,9 @@ data_df.head()
 # count labels
 data_df[data_df["Tag"]!="O"]["Tag"].value_counts()
 
+# visualising the tag frequency
+data_df["Tag"].value_counts().plot(kind="bar", figsize=(4,2))
+
 # count words for each sentences
 word_counts = data_df.groupby("Sentence #")["Word"].agg(["count"])
 #print(word_counts)
