@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 from data_preprocessing import *
 
-
+#Convert data into a LongTensor
 Xtrain = torch.tensor(X_train,dtype=torch.long)
 Xtest = torch.tensor(X_test,dtype=torch.long)
 ytrain = torch.tensor(y_train,dtype=torch.long)
@@ -16,16 +16,21 @@ ytest = torch.tensor(y_test, dtype=torch.long)
 Xdev = torch.tensor(X_dev,dtype=torch.long)
 ydev = torch.tensor(y_dev,dtype=torch.long)
 
-
+#Check the device on which a tensor is located, such as CPU or GPU.
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 device
 
+
+#Create a data iterator that batches and shuffles the data
 loader_train = data.DataLoader(data.TensorDataset(Xtrain, ytrain), shuffle=True, batch_size=4)
 loader_dev = data.DataLoader(data.TensorDataset(Xdev, ydev), shuffle=True, batch_size=4)
 loader_test = data.DataLoader(data.TensorDataset(Xtest, ytest), shuffle=True, batch_size=4)
 
 
-
+"""
+The code for Bahdanau Attention was partially adapted from Husken (https://github.com/mhauskn/pytorch_attention) 
+and Suhmed Pendurak (https://medium.com/intel-student-ambassadors/implementing-attention-models-in-pytorch-f947034b3e66)
+"""
 class BahdanauAttention(nn.Module):
     def __init__(self, hidden_dim):
         super().__init__()
@@ -44,7 +49,7 @@ class BahdanauAttention(nn.Module):
         return F.softmax(attention,dim=-1)
         
 
-
+#The code was partially adapted from Husken (https://discuss.pytorch.org/t/lstm-with-attention/14325)
 class RNNBahdanauAttentionNER(nn.Module):
 
     def __init__(self, input_dim, embedding_dim, hidden_dim, output_dim):
@@ -70,6 +75,7 @@ class RNNBahdanauAttentionNER(nn.Module):
         logits = torch.stack(logits, dim=0)
         return logits
 
+#The code was taken from StackOverflow.(https://stackoverflow.com/questions/71998978/early-stopping-in-pytorch)
 class EarlyStopping:
     def __init__(self, tolerance=3, min_delta= 0.1):
 
@@ -101,6 +107,7 @@ optimizer_rnn = optim.Adam(model_rnn.parameters())
 
 num_epochs=10
 for epoch in range(num_epochs):
+    #Training Phase
     model_rnn.train()
     train_loss=0.0
     #print(epoch)
@@ -118,7 +125,7 @@ for epoch in range(num_epochs):
         train_loss += loss.item()
     train_loss/=len(loader_train)
 
-        #Evaluation phase
+    #Evaluation phase
     model_rnn.eval()
     dev_loss=0.0
     with torch.no_grad():
@@ -143,12 +150,13 @@ for epoch in range(num_epochs):
         print("We are at epoch:", epoch)
         break
 
+#Decoded Tag
 def decode_tag(predictions,idtotag):
       decoded_tags=[idtotag[int(p)] for p in predictions]
       return decoded_tags
 
 
-# Evaluate the model on test data
+#Evaluate the model on test data
 model_rnn.eval()
 all_preds=[]
 all_true_tags=[]
