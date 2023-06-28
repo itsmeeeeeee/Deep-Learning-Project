@@ -119,4 +119,11 @@ y = [sentence + [tag2id["--PADDING--"]] * (MAX_SENTENCE - len(sentence)) for sen
 TAG_COUNT = len(tag2id)
 print(TAG_COUNT)
 
+# split data in test, development udn train 
+X_main, X_test, y_main, y_test = train_test_split(X, y, test_size=0.1, random_state=1234)
+X_train,X_dev,y_train,y_dev=train_test_split(X_main, y_main, test_size=0.1, random_state=1234)
 
+#print("Number of sentences in the training dataset: {}".format(len(X_train)))
+#print("Number of sentences in the test dataset : {}".format(len(X_test)))
+
+#print(X_train)
