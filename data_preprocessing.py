@@ -1,8 +1,11 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-#from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import io
+
+"""
+The following code was partially adapted from this article (https://www.dominodatalab.com/blog/named-entity-recognition-ner-challenges-and-model)
+"""
 
 # read the annotated dataset
 data_df = pd.read_csv("ner_datasetreference.csv", encoding="iso-8859-1", header=0)
@@ -116,11 +119,4 @@ y = [sentence + [tag2id["--PADDING--"]] * (MAX_SENTENCE - len(sentence)) for sen
 TAG_COUNT = len(tag2id)
 print(TAG_COUNT)
 
-# split data in test, development udn train 
-X_main, X_test, y_main, y_test = train_test_split(X, y, test_size=0.1, random_state=1234)
-X_train,X_dev,y_train,y_dev=train_test_split(X_main, y_main, test_size=0.1, random_state=1234)
 
-#print("Number of sentences in the training dataset: {}".format(len(X_train)))
-#print("Number of sentences in the test dataset : {}".format(len(X_test)))
-
-#print(X_train)
