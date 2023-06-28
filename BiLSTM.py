@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.utils.data as data
 
-
+#Convert data into a LongTensor
 Xtrain = torch.tensor(X_train,dtype=torch.long)
 Xtest = torch.tensor(X_test,dtype=torch.long)
 ytrain = torch.tensor(y_train,dtype=torch.long)
@@ -19,16 +19,18 @@ ydev = torch.tensor(y_dev,dtype=torch.long)
 print(len(Xtrain))
 print(len(ytest.view(-1)))
 
-
+#Check the device on which a tensor is located, such as CPU or GPU.
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 device
 
-
+#Create a data iterator that batches and shuffles the data
 loader_train = data.DataLoader(data.TensorDataset(Xtrain, ytrain), shuffle=True, batch_size=4)
 loader_dev = data.DataLoader(data.TensorDataset(Xdev, ydev), shuffle=True, batch_size=4)
 loader_test = data.DataLoader(data.TensorDataset(Xtest, ytest), shuffle=True, batch_size=4)
 
-
+"""
+BiLSTM Model
+"""
 class BiLSTM(nn.Module):
     def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim):
         super().__init__()
@@ -53,7 +55,7 @@ HIDDEN_DIM = 128
 OUTPUT_DIM = TAG_COUNT
 #NUM_LAYERS=2
 
-
+#The code was taken from StackOverflow.(https://stackoverflow.com/questions/71998978/early-stopping-in-pytorch)
 class EarlyStopping:
     def __init__(self, tolerance=0.001, min_delta= 0.001):
 
@@ -74,7 +76,7 @@ model_lstm=BiLSTM(len_uniq_words,EMBEDDING_DIM,HIDDEN_DIM,OUTPUT_DIM).to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer_lstm = optim.Adam(model_lstm.parameters())
 
-
+#Training phase
 num_epochs=10
 for epoch in range(num_epochs):
     model_lstm.train()
@@ -123,7 +125,7 @@ for epoch in range(num_epochs):
         break
     
 
-
+# Decoded Tag
 def decode_tag(predictions,idtotag):
   decoded_tags=[idtotag[int(p)] for p in predictions]
   return decoded_tags
