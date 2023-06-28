@@ -5,8 +5,8 @@ Im Projekt werden zwei Deep-Learning-Modelle im PyTorch-Framework trainiert, bas
 
 # Usage
 * BiLSTM-Modell trainieren
-  
-  ```python3 BiLSTM.py
+  ```
+  python3 BiLSTM.py
   ```
 * RNN-Modell mit Bahdanau Attention trainieren
   
