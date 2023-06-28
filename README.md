@@ -26,6 +26,8 @@ Im Projekt werden zwei Deep-Learning-Modelle im PyTorch-Framework trainiert, bas
 * Numpy 1.25.0
 * Sklearn 1.2.2
 
-# Training Results
-![Alt text](/Bilstm_ergebnisse.png?raw=true"BiLSTM Training")
-![Alt text](/Ergebnisse_RNNAttention.png?raw=true"BiLSTM Training")
+# Training Results BiLSTM
+![Alt text](/Bilstm_ergebnisse.png?raw=true "BiLSTM Training")
+
+# Training Results RNNAttention Training
+![Alt text](/Ergebnisse_RNNAttention.png?raw=true "RNNAttention Training")
